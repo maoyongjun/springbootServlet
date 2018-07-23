@@ -1,0 +1,6 @@
+org\foxconn\bootstrapTest\util\StringArrayUtil.class
+org\foxconn\bootstrapTest\entity\LabelEntity.class
+org\foxconn\bootstrapTest\DothillLabelAppliation.class
+org\foxconn\bootstrapTest\service\BootStrapServices.class
+org\foxconn\bootstrapTest\dao\LabelDao.class
+org\foxconn\bootstrapTest\entity\Msg.class

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="img/favicon.ico">
+<title>條碼模版</title>
+<!--
+        	描述：样式导入
+        -->
+<link rel="stylesheet"
+	href="js/bootstrap_above/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="js/bootstrap_above/bootstrap-table-develop/dist/bootstrap-table.css" />
+
+<!--
+        	描述：js导入，注意顺序，jquery必须引入
+        	bootstrap-table-zh-CN.js为表格汉化的文件
+        	FileSaver.min.js等是关联引用文件
+        -->
+<script src="js/bootstrap_above/jquery-1.9.1/jquery.min.js"></script>
+<script src="js/bootstrap_above/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript"
+	src="js/bootstrap_above/bootstrap-table-develop/dist/bootstrap-table.js"></script>
+<script type="text/javascript"
+	src="js/bootstrap_above/bootstrap-table-develop/dist/locale/bootstrap-table-zh-CN.js"></script>
+<script type="text/javascript"
+	src="js/bootstrap_above/bootstrap-table-develop/dist/extensions/export/bootstrap-table-export.js"></script>
+
+<script src="js/bootstrap_above/tableExport/libs/pdfmake/pdfmake.min.js"></script>
+<script src="js/bootstrap_above/tableExport/libs/pdfmake/vfs_fonts.js"></script>
+<script type="text/javascript"
+	src="js/bootstrap_above/tableExport/libs/FileSaver/FileSaver.min.js"></script>
+<script type="text/javascript"
+	src="js/bootstrap_above/tableExport/libs/jsPDF/jspdf.min.js"></script>
+<script type="text/javascript"
+	src="js/bootstrap_above/tableExport/libs/jsPDF-AutoTable/jspdf.plugin.autotable.js"></script>
+<script type="text/javascript"
+	src="js/bootstrap_above/tableExport/tableExport.js"></script>
+<script type="text/javascript"
+	src="js/bootstrap_above/jquery.serializejson.min.js"></script>
+
+<link
+	href="js/bootstrap_above/x-editable-develop/dist/bootstrap-editable/css/bootstrap-editable.css"
+	rel="stylesheet">
+<script
+	src="js/bootstrap_above/x-editable-develop/dist/bootstrap-editable/js/bootstrap-editable.js"></script>
+<script
+	src="js/bootstrap_above/bootstrap-table-develop/dist/extensions/editable/bootstrap-table-editable.js"></script>
+
+
+<script src="js/table.js?v=1.3"></script>
+</head>
+<!-- <body> -->
+<!-- 	<input id="btntext" type="button" value="新增" data-toggle="modal" -->
+<!-- 		data-target="#myModal" /> -->
+	
+	<button id ="queryLabel" class="btn">查詢</button>
+	<button id ="addRowbtn" class="btn btn-success">新增</button>
+	<button id ="saveRowbtn"class="btn btn-info">保存</button>
+	<button id ="deleteLabel" class="btn btn-danger">刪除</button>
+	<table class="table-responsive" id="db_dependences">
+	</table>
+
+	<!-- Modal -->
+	<div class="modal hide fade" id="myModal" tabindex="-1" role="dialog">
+		<div class="modal-header">
+			<button class="close" type="button" data-dismiss="modal">×</button>
+			<h3 id="myModalLabel">添加</h3>
+		</div>
+		<div class="modal-body">
+			<form id ="addLabelForm">
+				<table>
+					<tr>
+						<td>總成料號</td>
+						<td><input name="parentSkuno" id="parentSkuno"></input></td>
+						<td>子階成品料號</td>
+						<td><input name="skuno" id ="skuno"></input></td>
+					</tr>
+					<tr>
+						<td>HH料號</td>
+						<td><input name="label"></input></td>
+						<td>數量</td>
+						<td><input name="qty"></input></td>
+					</tr>
+					<tr>
+						<td>是否前加工</td>
+						<td><select class="selectpicker" name="isPreDo">
+						<option>前加工</option>
+						<option>SN需展開不打印</option>
+						<option>SN需展開并前加工</option>
+					</select>
+<!-- 					<input name="isPreDo"></input> -->
+					</td>
+						<td>備註</td>
+						<td><input name="others"></input></td>
+					</tr>
+				</table>
+			</form>
+			<button id = "addLabelsubmit">提交</button>
+		</div>
+	</div>
+	
+	<div class="modal hide fade" id="myQueryModal" tabindex="-1" role="dialog">
+		<div class="modal-header">
+			<button class="close" type="button" data-dismiss="modal">×</button>
+			<h3 id="myModalLabel">查詢</h3>
+		</div>
+		<div class="modal-body">
+			<form id ="queryLabelForm">
+				<table>
+					<tr>
+						<td>總成料號</td>
+						<td><input name="parentSkuno" id="queryParentSkuno"></input></td>
+						<td>子階成品料號</td>
+						<td><input name="skuno" id ="querySkuno"></input></td>
+					</tr>
+					<tr>
+						<td>HH料號</td>
+						<td><input name="label"  id="queryLabel"></input></td>
+						<td>備註</td>
+						<td><input name="others"  id="queryOthers"></input></td>
+					</tr>
+				</table>
+			</form>
+			<button id = "queryLabelsubmit">提交</button>
+		</div>
+	</div>
+</html>
