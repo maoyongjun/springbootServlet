@@ -25,7 +25,7 @@ public class LabelEntity {
 		return wos;
 	}
 	public void setWos(String wos) {
-		if(null!=wos){
+		if(null!=wos&&!"".equals(wos.trim())){
 			this.wos = StringArrayUtil.addDHAndFh(wos);
 		}
 	}
