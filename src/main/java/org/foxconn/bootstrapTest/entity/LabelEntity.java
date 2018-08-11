@@ -16,9 +16,25 @@ public class LabelEntity {
 	String ids;
 	String parentSkunos;
 	String skunos;
+	String custpartno;
+	String wos;
 	
 	
 	
+	public String getWos() {
+		return wos;
+	}
+	public void setWos(String wos) {
+		if(null!=wos){
+			this.wos = StringArrayUtil.addDHAndFh(wos);
+		}
+	}
+	public String getCustpartno() {
+		return custpartno;
+	}
+	public void setCustpartno(String custpartno) {
+		this.custpartno = custpartno;
+	}
 	public String getParentSkunos() {
 		return parentSkunos;
 	}

@@ -48,7 +48,7 @@
 	src="js/bootstrap_above/bootstrap-table-develop/dist/extensions/editable/bootstrap-table-editable.js"></script>
 
 
-<script src="js/table.js?v=1.3"></script>
+<script src="js/table.js?v=1.5"></script>
 </head>
 <!-- <body> -->
 <!-- 	<input id="btntext" type="button" value="新增" data-toggle="modal" -->
@@ -74,11 +74,11 @@
 						<td>總成料號</td>
 						<td><input name="parentSkuno" id="parentSkuno"></input></td>
 						<td>子階成品料號</td>
-						<td><input name="skuno" id ="skuno"></input></td>
+						<td><input name="label" id ="skuno"></input></td>
 					</tr>
 					<tr>
 						<td>HH料號</td>
-						<td><input name="label"></input></td>
+						<td><input name="skuno"></input></td>
 						<td>數量</td>
 						<td><input name="qty"></input></td>
 					</tr>
@@ -111,14 +111,18 @@
 					<tr>
 						<td>總成料號</td>
 						<td><input name="parentSkuno" id="queryParentSkuno"></input></td>
-						<td>子階成品料號</td>
+						<td>HH料號</td>
 						<td><input name="skuno" id ="querySkuno"></input></td>
 					</tr>
 					<tr>
-						<td>HH料號</td>
+						<td>子階成品料號</td>
 						<td><input name="label"  id="queryLabel"></input></td>
 						<td>備註</td>
 						<td><input name="others"  id="queryOthers"></input></td>
+					</tr>
+					<tr>
+						<td>工单</td>
+						<td><input name="wos"  id="queryWOs"></input></td>
 					</tr>
 				</table>
 			</form>

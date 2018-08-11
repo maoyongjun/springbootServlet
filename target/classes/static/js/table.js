@@ -74,6 +74,7 @@ function queryLabelAction(){
 	var skuno = $('#querySkuno').val();
 	var label = $('#queryLabel').val();
 	var others = $('#queryOthers').val();
+	var wos =$('#queryWOs').val();
 	if(parentSkuno==undefined){
 		parentSkuno="";
 	}
@@ -86,8 +87,11 @@ function queryLabelAction(){
 	if(others==undefined){
 		others="";
 	}
+	if(wos==undefined){
+		wos="";
+	}
 	var queryStr = "parentSkunos="+parentSkuno+"&skunos="+skuno
-	+"&label="+label+"&others="+others
+	+"&label="+label+"&others="+others+"&wos="+wos
 	console.log(queryStr);
 	$('#db_dependences').bootstrapTable('refresh', { url: 'label/query?'+queryStr});
 	$("#myQueryModal").modal("hide");
@@ -247,7 +251,7 @@ function setTable(json){
 				}
 			} 
 	    }, {
-	        field: 'skuno',
+	        field: 'label',
 	        title: '子階成品料號',
             editable: {
 				type: 'text',  
@@ -257,16 +261,8 @@ function setTable(json){
 					}  
 				}
 			} 
-	    }, {
-	        field: 'description',
-	        title: '描述'
-            
-	    }, {
-	        field: 'version',
-	        title: '版次'
-            
 	    },{
-	        field: 'label',
+	        field: 'skuno',
 	        title: 'HHPN',
             editable: {
 				type: 'text',  
@@ -276,6 +272,17 @@ function setTable(json){
 					}  
 				}
 			} 
+	    },{
+	        field: 'custpartno',
+	        title: '客户料号'
+	    }, {
+	        field: 'description',
+	        title: '描述'
+            
+	    }, {
+	        field: 'version',
+	        title: '版次'
+            
 	    }, 
 	    
 	    {

@@ -19,7 +19,7 @@
  	</update>
  	
  	<select id="findAll" parameterType="org.foxconn.bootstrapTest.entity.LabelEntity" resultType="org.foxconn.bootstrapTest.entity.LabelEntity">
- 		SELECT 	Id,parentSkuno,skuno,qty,isPreDo,b.version,b.description ,label,others
+ 		SELECT 	Id,parentSkuno,skuno,qty,isPreDo,b.version,b.description ,label,others,b.partname as custpartno
  		FROM 	sfcskunolabel a LEFT JOIN mmprodmaster  b
  				ON	a.skuno= b.partno
  		<where>
@@ -36,6 +36,12 @@
  			<if test="others != null and others != ''">
  				and others  in (${'\''+others+'\''})
  			</if>
+ 			<if test="wos != null and wos != ''">
+ 				and (parentSkuno  in (SELECT skuno FROM mfworkorder WHERE workorderno IN (${'\''+wos+'\''}))
+ 				 OR label in (SELECT skuno FROM mfworkorder WHERE workorderno IN (${'\''+wos+'\''}))
+ 				)
+ 			</if>
+ 			
  		</where>
  		 	
  	</select>
