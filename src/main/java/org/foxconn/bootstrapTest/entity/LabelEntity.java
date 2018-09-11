@@ -18,9 +18,16 @@ public class LabelEntity {
 	String skunos;
 	String custpartno;
 	String wos;
+	String fileNames;
 	
 	
 	
+	public String getFileNames() {
+		return fileNames;
+	}
+	public void setFileNames(String fileNames) {
+		this.fileNames = fileNames;
+	}
 	public String getWos() {
 		return wos;
 	}

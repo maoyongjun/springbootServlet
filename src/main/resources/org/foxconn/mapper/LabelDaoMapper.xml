@@ -19,7 +19,7 @@
  	</update>
  	
  	<select id="findAll" parameterType="org.foxconn.bootstrapTest.entity.LabelEntity" resultType="org.foxconn.bootstrapTest.entity.LabelEntity">
- 		SELECT 	Id,parentSkuno,skuno,qty,isPreDo,b.version,b.description ,label,others,b.partname as custpartno
+ 		SELECT 	Id,parentSkuno,skuno,qty,isPreDo,b.version,b.description ,label,others,b.partname as custpartno,dbo.fn_GetLabelFileNamesById(a.Id) as fileNames
  		FROM 	sfcskunolabel a LEFT JOIN mmprodmaster  b
  				ON	a.skuno= b.partno
  		<where>
@@ -45,6 +45,37 @@
  		</where>
  		 	
  	</select>
+ 	<select id="findLabelFiles" parameterType="org.foxconn.bootstrapTest.entity.LabelFileEntity" 
+ 		resultType="org.foxconn.bootstrapTest.entity.LabelFileEntity">
+ 		SELECT	ID,labelId,fileId,fileSystemName,labelName 
+		FROM	efoxsfcLabelFileUpload
+		<where>
+			<if test="labelId != null and labelId != ''">
+ 				and labelId  = #{labelId}
+ 			</if>
+		</where>
+ 	</select>
  	
+ 	<select id="findLabelFilesSize" parameterType="org.foxconn.bootstrapTest.entity.LabelFileEntity" 
+ 		resultType="int">
+ 		SELECT	count(1)
+		FROM	efoxsfcLabelFileUpload
+		<where>
+			<if test="labelId != null and labelId != ''">
+ 				and labelId  = #{labelId}
+ 			</if>
+		</where>
+ 	</select>
+ 	
+ 	<insert id="addLabelFile" parameterType="org.foxconn.bootstrapTest.entity.LabelFileEntity">
+ 		INSERT INTO efoxsfcLabelFileUpload(labelId,fileId,fileSystemName,labelName)
+ 		VALUES(#{labelId},#{fileId},#{fileSystemName},#{labelName})
+ 	</insert>
+ 	<delete id="deleteLabelFile" parameterType="org.foxconn.bootstrapTest.entity.LabelFileEntity">
+ 			DELETE FROM efoxsfcLabelFileUpload WHERE id = #{id}
+ 	</delete>
+ 	<delete id="deleteAllLabelFile" parameterType="org.foxconn.bootstrapTest.entity.LabelFileEntity">
+ 			DELETE FROM efoxsfcLabelFileUpload WHERE labelId = #{labelId}
+ 	</delete>
  </mapper>        
  

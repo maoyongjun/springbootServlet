@@ -22,8 +22,8 @@ $(function () {
 	$("#queryLabel").click(queryLabel);
 	$("#queryLabelsubmit").click(queryLabelAction);
 	$("#saveRowbtn").click(saveRowbtnAction);
-	
-	
+	$("#uploadFile").click(uploadFilebtnAction);
+	$("#downloadFile").click(downloadFileAction);
 	$('#addRowbtn').click(function(){
 		
 		var parentSkuno = $('#queryParentSkuno').val();
@@ -36,6 +36,51 @@ $(function () {
 	});
 	
 });
+function downloadFileAction(){
+	if(a.length!=1){
+	    console.log(a[0].id);
+	    alert("只能选择一条记录！");
+	    return;
+	}else{
+		labelId=a[0].id;
+	}
+	
+	
+	$.ajax({
+		url:"label/addList",
+		type:"post",
+		contentType:"application/json;charset=utf-8",
+		data:"{\"labelId\":"+labelId+"}",
+		dataType:"json",
+		success:function(result){
+			var labelId="";
+			var a= $("#db_dependences").bootstrapTable('getSelections');
+			
+			window.document.location.href='download?labelid='+labelId+"&fileId="+fileId;
+		},
+		error:function(){
+			alert("call error");
+		}
+	});
+	
+	
+}
+
+function uploadFilebtnAction(){
+	var labelId="";
+	var a= $("#db_dependences").bootstrapTable('getSelections');
+	if(a.length!=1){
+	    console.log(a[0].id);
+	    alert("只能选择一条记录！");
+	    return;
+	}else{
+		labelId=a[0].id;
+	}
+	$("#labelId").val(labelId);
+	$("#myupLoadModal").modal("show");
+	
+}
+
 
 function saveRowbtnAction(){
 	var rows = $('#db_dependences').bootstrapTable('getData', true);
@@ -324,6 +369,9 @@ function setTable(json){
 					}  
 				}
 			} 
+	    },{
+	        field: 'fileNames',
+	        title: '附件'
 	    }
 	    
 	    ]

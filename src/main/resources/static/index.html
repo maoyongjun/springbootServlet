@@ -48,7 +48,7 @@
 	src="js/bootstrap_above/bootstrap-table-develop/dist/extensions/editable/bootstrap-table-editable.js"></script>
 
 
-<script src="js/table.js?v=1.5"></script>
+<script src="js/table.js?v=1.6"></script>
 </head>
 <!-- <body> -->
 <!-- 	<input id="btntext" type="button" value="新增" data-toggle="modal" -->
@@ -58,8 +58,9 @@
 	<button id ="addRowbtn" class="btn btn-success">新增</button>
 	<button id ="saveRowbtn"class="btn btn-info">保存</button>
 	<button id ="deleteLabel" class="btn btn-danger">刪除</button>
-	<table class="table-responsive" id="db_dependences">
-	</table>
+	<button id ="uploadFile" class="btn btn-info">上传附件</button>
+	<button id ="downloadFile" class="btn btn-info">下载附件</button>
+	<table class="table-responsive" id="db_dependences"></table>
 
 	<!-- Modal -->
 	<div class="modal hide fade" id="myModal" tabindex="-1" role="dialog">
@@ -84,13 +85,13 @@
 					</tr>
 					<tr>
 						<td>是否前加工</td>
-						<td><select class="selectpicker" name="isPreDo">
-						<option>前加工</option>
-						<option>SN需展開不打印</option>
-						<option>SN需展開并前加工</option>
-					</select>
-<!-- 					<input name="isPreDo"></input> -->
-					</td>
+						<td>
+							<select class="selectpicker" name="isPreDo">
+								<option>前加工</option>
+								<option>SN需展開不打印</option>
+								<option>SN需展開并前加工</option>
+							</select>
+						</td>
 						<td>備註</td>
 						<td><input name="others"></input></td>
 					</tr>
@@ -120,13 +121,19 @@
 						<td>備註</td>
 						<td><input name="others"  id="queryOthers"></input></td>
 					</tr>
-					<tr>
-						<td>工单</td>
-						<td><input name="wos"  id="queryWOs"></input></td>
-					</tr>
 				</table>
 			</form>
 			<button id = "queryLabelsubmit">提交</button>
 		</div>
+	</div>
+	<div class="modal hide fade" id="myupLoadModal" tabindex="-1" role="dialog" style="height: 100px">
+			<div style="height:30px;">
+			
+			</div>
+			<form action="file/upload" enctype="multipart/form-data" method="post">
+				<input type="file"  name="fileName">
+				<input type="text" name ="labelId" style="display:none" id="labelId">
+				<input type="submit">
+			</form>
 	</div>
 </html>
