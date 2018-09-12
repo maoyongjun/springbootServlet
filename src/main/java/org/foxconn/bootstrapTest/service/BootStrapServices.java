@@ -71,16 +71,33 @@ public class BootStrapServices {
 		return list;
 	}
 	
+	@PostMapping(path="/label/deleteFiles",consumes="application/json",produces="application/json")
+	public Msg deleteFiles(@RequestBody LabelFileEntity labelFileEntity){
+		labelDao.deleteAllLabelFile(labelFileEntity);
+		Msg msg = new Msg();
+		msg.setMsg("OK");
+		return msg;
+	}
+	
+	
 	@PostMapping(path="/label/findFilesize",consumes="application/json",produces="application/json")
-	public Msg deleteLabel(@RequestBody LabelFileEntity labelFileEntity){
+	public Msg findFilesize(@RequestBody LabelFileEntity labelFileEntity){
 		Integer size =  labelDao.findLabelFilesSize(labelFileEntity);
 		Msg msg = new Msg();
 		msg.setMsg(size.toString());
 		return msg;
 	}
 	
-	@PostMapping(path = "/file/upload", consumes = "multipart/form-data")
-	public String getFile(@RequestParam("fileName") MultipartFile file,String labelId) {
+	
+	@PostMapping(path="/label/findLabelFiles",consumes="application/json",produces="application/json")
+	public Msg findFiles(@RequestBody LabelFileEntity labelFileEntity){
+		List<LabelFileEntity> findLabelFiles = labelDao.findLabelFiles(labelFileEntity);
+		Msg msg = new Msg();
+		msg.setFiles(findLabelFiles);
+		return msg;
+	}
+	@PostMapping(path = "/file/upload")
+	public String getFile(@RequestParam("fileName") MultipartFile file,String labelId,String fileId) {
 	    if(file.isEmpty()){
             return "false";
         }
@@ -122,13 +139,16 @@ public class BootStrapServices {
             return "false";
         }
 	}
-	@RequestMapping("/download")
+	@RequestMapping(value="/download")
 	public void downLoadFile(HttpServletRequest request,HttpServletResponse response) throws Exception{
-		String labelid = request.getParameter("labelid");
-		logger.info("get files for label:"+labelid);
+		String fileid = request.getParameter("fileId");
+		String labelid = request.getParameter("labelId");
+		logger.info("get files for label:"+labelid+",fileid:"+fileid);
 		LabelFileEntity labelFileEntity = new LabelFileEntity();
 		Integer LabelNum = Integer.parseInt(labelid);
+		Integer fileNum = Integer.parseInt(fileid);
 		labelFileEntity.setLabelId(LabelNum);
+		labelFileEntity.setFileId(fileNum);
 		List<LabelFileEntity> labelFiles =  labelDao.findLabelFiles(labelFileEntity);
 		if(labelFiles.size()==0){
 			return ;
@@ -136,22 +156,20 @@ public class BootStrapServices {
 		response.setContentType("application/x-msdownload");
 		
 		OutputStream out = response.getOutputStream();
-		for(int i=0;i<labelFiles.size();i++){
-			String fileName = labelFiles.get(i).getLabelName();
-			String systemFileName = labelFiles.get(0).getFileSystemName();
-			logger.info("fileName:"+fileName+",systemFileName:"+systemFileName);
-			//2、下载
-			File file = new File("d:/uploadFiles/"+systemFileName);
-			fileName = new String(fileName.getBytes("utf-8"),"ISO8859_1");
-			response.setHeader("Content-Disposition", "attachment;filename=\"" + fileName+ "\"");
-			int len = (int)file.length();
-			byte []buf = new byte[len];
-			FileInputStream fis = new FileInputStream(file);
-			len = fis.read(buf);
-			out.write(buf, 0, len);
-			fis.close();
-			logger.info(file.toString());
-		}
+		String fileName = labelFiles.get(0).getLabelName();
+		String systemFileName = labelFiles.get(0).getFileSystemName();
+		logger.info("fileName:"+fileName+",systemFileName:"+systemFileName);
+		//2、下载
+		File file = new File("d:/uploadFiles/"+systemFileName);
+		fileName = new String(fileName.getBytes("utf-8"),"ISO8859_1");
+		response.setHeader("Content-Disposition", "attachment;filename=\"" + fileName+ "\"");
+		int len = (int)file.length();
+		byte []buf = new byte[len];
+		FileInputStream fis = new FileInputStream(file);
+		len = fis.read(buf);
+		out.write(buf, 0, len);
+		fis.close();
+		logger.info(file.toString());
 		out.flush();
 		
 		

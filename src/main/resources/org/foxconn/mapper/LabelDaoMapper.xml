@@ -53,6 +53,9 @@
 			<if test="labelId != null and labelId != ''">
  				and labelId  = #{labelId}
  			</if>
+ 			<if test="fileId != null and fileId != ''">
+ 				and fileId  = #{fileId}
+ 			</if>
 		</where>
  	</select>
  	

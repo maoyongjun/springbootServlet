@@ -48,7 +48,7 @@
 	src="js/bootstrap_above/bootstrap-table-develop/dist/extensions/editable/bootstrap-table-editable.js"></script>
 
 
-<script src="js/table.js?v=1.6"></script>
+<script src="js/table.js?v=1.7"></script>
 </head>
 <!-- <body> -->
 <!-- 	<input id="btntext" type="button" value="新增" data-toggle="modal" -->
@@ -60,6 +60,7 @@
 	<button id ="deleteLabel" class="btn btn-danger">刪除</button>
 	<button id ="uploadFile" class="btn btn-info">上传附件</button>
 	<button id ="downloadFile" class="btn btn-info">下载附件</button>
+	<button id ="deleteFiles" class="btn btn-danger">删除附件</button>
 	<table class="table-responsive" id="db_dependences"></table>
 
 	<!-- Modal -->
@@ -126,14 +127,22 @@
 			<button id = "queryLabelsubmit">提交</button>
 		</div>
 	</div>
-	<div class="modal hide fade" id="myupLoadModal" tabindex="-1" role="dialog" style="height: 100px">
-			<div style="height:30px;">
-			
-			</div>
-			<form action="file/upload" enctype="multipart/form-data" method="post">
-				<input type="file"  name="fileName">
+	<div class="modal hide fade" id="myupLoadModal" tabindex="-1" role="dialog">
+			<div style="margin-left: 100px;margin-top: 30px;margin-bottom: 30px;">
+				<div style="margin-bottom: 20px;"><span>每次上传一个附件</span></div>
+				<input type="file"  name="fileName" id="file1">
 				<input type="text" name ="labelId" style="display:none" id="labelId">
-				<input type="submit">
-			</form>
+				<button class="btn" id="uploadFileSubmit">提交</button>
+			</div>
 	</div>
+	
+	<div class="modal hide fade" id="mydownloadModal" tabindex="-1" role="dialog">
+			<div style="margin-left: 100px;margin-top: 30px;margin-bottom: 30px;">
+				<div style="margin-bottom: 20px;"><span>附件列表</span></div>
+				<table id="downloadFilesTable">
+					
+				</table>
+			</div>
+	</div>
+	
 </html>

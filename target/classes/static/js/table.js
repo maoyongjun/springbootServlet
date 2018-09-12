@@ -34,9 +34,12 @@ $(function () {
 	    var data = {"skuno":"","parentSkuno":"","skuno":"","label":"","others":"","isPreDo":"","qty":""};
 	    $('#db_dependences').bootstrapTable('append',data);    
 	});
+	$("#deleteFiles").click(deleteFiles);
 	
 });
-function downloadFileAction(){
+function deleteFiles(){
+	var labelId=""; 
+	var a= $("#db_dependences").bootstrapTable('getSelections');
 	if(a.length!=1){
 	    console.log(a[0].id);
 	    alert("只能选择一条记录！");
@@ -44,19 +47,50 @@ function downloadFileAction(){
 	}else{
 		labelId=a[0].id;
 	}
-	
-	
 	$.ajax({
-		url:"label/addList",
+		url:"label/deleteFiles",
 		type:"post",
 		contentType:"application/json;charset=utf-8",
 		data:"{\"labelId\":"+labelId+"}",
 		dataType:"json",
 		success:function(result){
-			var labelId="";
-			var a= $("#db_dependences").bootstrapTable('getSelections');
-			
-			window.document.location.href='download?labelid='+labelId+"&fileId="+fileId;
+			$('#db_dependences').bootstrapTable('refresh', { url: 'label/query'});	
+		},
+		error:function(){
+			alert("call error");
+		}
+	});
+}
+
+function downloadFileAction(){
+	var labelId=""; 
+	var a= $("#db_dependences").bootstrapTable('getSelections');
+	if(a.length!=1){
+	    console.log(a[0].id);
+	    alert("只能选择一条记录！");
+	    return;
+	}else{
+		labelId=a[0].id;
+	}
+	$("#mydownloadModal").modal("show");
+	$.ajax({
+		url:"label/findLabelFiles",
+		type:"post",
+		contentType:"application/json;charset=utf-8",
+		data:"{\"labelId\":"+labelId+"}",
+		dataType:"json",
+		success:function(result){
+			$("#downloadFilesTable").text("");
+			console.log(result);
+			for(var i in result.files){
+				console.log(i);
+				$("#downloadFilesTable").append(
+					"<tr>" +
+					"	<td><input type=\"text\"  disabled=\"disabled\"  value=\""+result.files[i].labelName+"\"/></td>" +
+					"	<td><button class=\"btn\" onclick=\"downloadFile("+result.files[i].labelId+","+result.files[i].fileId+")\">下载</button></td>" +
+					"</tr>" 
+					);
+			}
 		},
 		error:function(){
 			alert("call error");
@@ -64,6 +98,13 @@ function downloadFileAction(){
 	});
 	
 	
+
+	
+	
+}
+function downloadFile(labelId,fileId){
+	
+	window.document.location.href='download?labelId='+labelId+"&fileId="+fileId;
 }
 
 function uploadFilebtnAction(){
@@ -78,7 +119,27 @@ function uploadFilebtnAction(){
 	}
 	$("#labelId").val(labelId);
 	$("#myupLoadModal").modal("show");
-	
+	$("#uploadFileSubmit").click(function(){
+		var formData = new FormData();
+		formData.append("fileName",document.getElementById("file1").files[0]);
+		formData.append("labelId",$("#labelId").val());
+		$.ajax({
+			url:"file/upload",
+			type:"post",
+			contentType:false,
+			data:formData,
+			dataType:"text",
+			processData:false,
+			success:function(result){
+				$('#db_dependences').bootstrapTable('refresh', { url: 'label/query'});	
+				$("#myupLoadModal").modal("hide");
+			},
+			error:function(){
+				alert("call error");
+			}
+		});
+			
+	});
 }
 
 
