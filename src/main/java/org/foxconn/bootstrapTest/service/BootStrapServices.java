@@ -15,7 +15,6 @@ import org.foxconn.bootstrapTest.dao.LabelDao;
 import org.foxconn.bootstrapTest.entity.LabelEntity;
 import org.foxconn.bootstrapTest.entity.LabelFileEntity;
 import org.foxconn.bootstrapTest.entity.Msg;
-import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -179,7 +178,7 @@ public class BootStrapServices {
 		
 		//file.delete();
 	}
-	@Test
+	//@Test
 	public void testSubFileName(){
 		String fileName = "测试.doc";
 		String prefxFileName = fileName.substring(0, fileName.lastIndexOf("."));

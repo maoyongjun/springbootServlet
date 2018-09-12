@@ -48,7 +48,7 @@
 	src="js/bootstrap_above/bootstrap-table-develop/dist/extensions/editable/bootstrap-table-editable.js"></script>
 
 
-<script src="js/table.js?v=1.7"></script>
+<script src="js/table.js?v=1.9"></script>
 </head>
 <!-- <body> -->
 <!-- 	<input id="btntext" type="button" value="新增" data-toggle="modal" -->
@@ -109,22 +109,29 @@
 		</div>
 		<div class="modal-body">
 			<form id ="queryLabelForm">
-				<table>
+				<table style="text-align: right;">
 					<tr>
-						<td>總成料號</td>
+						<td nowrap="true"><span>總成料號:</span></td>
 						<td><input name="parentSkuno" id="queryParentSkuno"></input></td>
-						<td>HH料號</td>
+					</tr>
+					<tr>	
+						<td  nowrap="true"><span>HH料號:</span></td>
 						<td><input name="skuno" id ="querySkuno"></input></td>
 					</tr>
 					<tr>
-						<td>子階成品料號</td>
+						<td  nowrap="true"><span>子階成品料號:</span></td>
 						<td><input name="label"  id="queryLabel"></input></td>
-						<td>備註</td>
+					</tr>
+					<tr>
+						<td  nowrap="true"><span>備註:</span></td>
 						<td><input name="others"  id="queryOthers"></input></td>
 					</tr>
 				</table>
 			</form>
-			<button id = "queryLabelsubmit">提交</button>
+			<div style="text-align: center">
+				<button id = "queryLabelsubmit" class="btn">查询</button>
+			</div>
+			
 		</div>
 	</div>
 	<div class="modal hide fade" id="myupLoadModal" tabindex="-1" role="dialog">

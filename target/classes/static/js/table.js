@@ -35,6 +35,29 @@ $(function () {
 	    $('#db_dependences').bootstrapTable('append',data);    
 	});
 	$("#deleteFiles").click(deleteFiles);
+	$("#uploadFileSubmit").click(function(){
+		$("#uploadFileSubmit").hide();
+		var formData = new FormData();
+		formData.append("fileName",document.getElementById("file1").files[0]);
+		formData.append("labelId",$("#labelId").val());
+		$.ajax({
+			url:"file/upload",
+			type:"post",
+			contentType:false,
+			data:formData,
+			dataType:"text",
+			processData:false,
+			success:function(result){
+				$("#myupLoadModal").modal("hide");
+				$('#db_dependences').bootstrapTable('refresh', { url: 'label/query'});	
+				
+			},
+			error:function(){
+				alert("call error");
+			}
+		});
+			
+	});
 	
 });
 function deleteFiles(){
@@ -118,28 +141,9 @@ function uploadFilebtnAction(){
 		labelId=a[0].id;
 	}
 	$("#labelId").val(labelId);
+	$("#uploadFileSubmit").show();
 	$("#myupLoadModal").modal("show");
-	$("#uploadFileSubmit").click(function(){
-		var formData = new FormData();
-		formData.append("fileName",document.getElementById("file1").files[0]);
-		formData.append("labelId",$("#labelId").val());
-		$.ajax({
-			url:"file/upload",
-			type:"post",
-			contentType:false,
-			data:formData,
-			dataType:"text",
-			processData:false,
-			success:function(result){
-				$('#db_dependences').bootstrapTable('refresh', { url: 'label/query'});	
-				$("#myupLoadModal").modal("hide");
-			},
-			error:function(){
-				alert("call error");
-			}
-		});
-			
-	});
+	
 }
 
 
